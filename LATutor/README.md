@@ -631,7 +631,7 @@ function draw() {
   }
 ```
 
-
+We USED:
 ```if (frameCount % 60 == 0) {
       this.lifespan -= 5;}
 ```
