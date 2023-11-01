@@ -638,10 +638,12 @@ We USED:
 This means for every one second, the lifespan of the virus will minus 5, we are now making the lifespan more dynamic
 So we can make some differences through time. 
 By using```this.r=70```, we increased the diameter of the Virus
-```var xspeed2=this.xspeed*0.01
+
+The code listed here:
+      var xspeed2=this.xspeed*0.01
       var yspeed2=this.yspeed*0.01
       this.x-=xspeed2
-      this.y-=yspeed2```  
+      this.y-=yspeed2  
       
       The usage of which is to make it slower.
 To make the virus's color change through time, here is what we have done. 
