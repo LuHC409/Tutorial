@@ -641,8 +641,11 @@ By using```this.r=70```, we increased the diameter of the Virus
 ```var xspeed2=this.xspeed*0.01
       var yspeed2=this.yspeed*0.01
       this.x-=xspeed2
-      this.y-=yspeed2```  The usage of which is to make it slower.
+      this.y-=yspeed2```  
+      
+      The usage of which is to make it slower.
 To make the virus's color change through time, here is what we have done. We control the color by using the variable the lifespan we claimed in constructor.
+
 ```fill(
         this.colorR + 16,
         this.colorG - 145 + this.lifespan,
