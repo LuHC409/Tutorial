@@ -57,6 +57,7 @@ speedY: Represents the speed of the ball in the vertical direction.
 this.x = x; and similar statements: These statements assign the values of the constructor's parameters to the properties of the newly created object. The this keyword refers to the current object, allowing us to access and use its properties. So, this.x represents the x property of the object, and it assigns the value of the x parameter from the constructor to this property, making it accessible for later operations.
 
 ```javascript
+let ball
 class Ball {
   constructor(x, y, radius, speedX, speedY) {
     this.x = x;
@@ -68,7 +69,7 @@ class Ball {
 }
 function setup() {
   createCanvas(400, 400);
-  let ball = new Ball(100, 200, 20, 2, -1);
+  ball = new Ball(100, 200, 20, 2, -1);
 }
 function draw(){
    
@@ -107,6 +108,7 @@ To sum up, the display function we called is to make the ball shown.
 
 Now let us make the ball to move:
 ```javascript
+let ball
 class Ball {
   constructor(x, y, radius, speedX, speedY) {
     this.x = x;
@@ -133,7 +135,7 @@ class Ball {
 }
 function setup() {
   createCanvas(400, 400);
-  let ball = new Ball(100, 200, 20, 2, -1);
+  ball = new Ball(100, 200, 20, 2, -1);
 }
 function draw(){
     ball.display()
@@ -152,6 +154,8 @@ We have already learned to draw a basic bouncing ball, what we are doing now is 
 Now we know the basic syntax of the OOP, let's make a project based on that:
 ```javascript
 let balls = [];
+let ball
+let d
 
 function setup() {
   createCanvas(400, 400);
@@ -161,17 +165,17 @@ function draw() {
   background(220);
 
    for (let i = 0; i < balls.length; i++) {
-    let ball = balls[i];
+    ball = balls[i];
     ball.update();
     ball.display();
   }
 }
 
 function mousePressed() {
-  for (let ball of balls) {
-    let d = dist(mouseX, mouseY, ball.x, ball.y);
-    if (d < ball.radius) {
-      ball.accelerate();
+   for (let i = 0; i < balls.length; i++) {
+    d = dist(mouseX, mouseY, ball.x, ball.y);
+    if (d < balls[i].radius) {
+      balls[i].accelerate();
     }
   }
 }
@@ -215,7 +219,7 @@ function keyPressed() {
     let y = random(radius, height - radius);
     let speedX = random(-3, 3);
     let speedY = random(-3, 3);
-    let ball = new Ball(x, y, radius, speedX, speedY);
+    ball = new Ball(x, y, radius, speedX, speedY);
     balls.push(ball);
   }
 }
@@ -253,7 +257,7 @@ class Bubbles {
     push();
     noStroke();
     translate(this.x, this.y);
-    for (var i = 0; i < 8; i++) {
+    for (let i = 0; i < 8; i++) {
       rotate(PI / 4 + 0.015 * sin(frameCount * 0.1));
       noStroke();
       triangle(
@@ -308,7 +312,7 @@ class Bubbles {
     arc(0, -30, 100, 100, (HALF_PI * 6.5) / 8, (HALF_PI * 9.5) / 8);
     arc(-13, 17, 10, 10, (PI * 2) / 3, (4 / 3) * PI);
     arc(13, 17, 10, 10, (-1 / 3) * PI, (1 / 3) * PI);
-    for (var x = -10; x < 10; x += 15) {
+    for (let x = -10; x < 10; x += 15) {
       triangle(x, 20, x + 2.5, 24, x + 5, 20);
     }
     pop();
@@ -359,13 +363,16 @@ class Bubbles {
     this.lifespan = 255;
   }
   show() {
+    // Main body of the virus
     fill(this.colorR, this.lifespan, this.colorB);
     circle(this.x, this.y, this.r);
 
+    // Section for the spikes
     push();
     noStroke();
     translate(this.x, this.y);
-    for (var i = 0; i < 8; i++) {
+    for (let i = 0; i < 8; i++) {
+      // to draw the tentacles on the virus for 8 times
       rotate(PI / 4 + 0.015 * sin(frameCount * 0.1));
       noStroke();
       triangle(
@@ -384,13 +391,12 @@ class Bubbles {
       );
       circle(0, -this.r / 2 + 10 * cos(22.5), 8);
       pop();
-
       noStroke();
     }
     pop();
 
+    // Eyes and eyelids
     push();
-
     translate(this.x, this.y);
     fill(255, this.lifespan, 143);
     circle(-12, -5, 18);
@@ -404,6 +410,8 @@ class Bubbles {
     stroke(141, 238, 238);
     line(-14, -9, 0, -2);
     pop();
+
+    // The details of the virus's face
     push();
     translate(this.x, this.y);
     strokeWeight(4);
@@ -420,19 +428,22 @@ class Bubbles {
     arc(0, -30, 100, 100, (HALF_PI * 6.5) / 8, (HALF_PI * 9.5) / 8);
     arc(-13, 17, 10, 10, (PI * 2) / 3, (4 / 3) * PI);
     arc(13, 17, 10, 10, (-1 / 3) * PI, (1 / 3) * PI);
-    for (var x = -10; x < 10; x += 15) {
+    for (let x = -10; x < 10; x += 15) {
       triangle(x, 20, x + 2.5, 24, x + 5, 20);
     }
     pop();
+
+    // Circles for decorative elements
+    // The ball on the tip
     push();
     translate(this.x, this.y);
     fill(48, 128 + this.lifespan, 20);
     circle(-3, -22, 5);
     circle(-24, 6, 5);
     circle(23, 8, 5);
-
     pop();
   }
+
 
   move() {
     this.x = this.x + this.xspeed;
@@ -466,7 +477,7 @@ function draw() {
       bubbles.push(b);
     }
 
-  or (var i = 0; i < bubbles.length; i++) {
+  or (let i = 0; i < bubbles.length; i++) {
     bubbles[i].move();
     bubbles[i].bounce();
     bubbles[i].show();
@@ -495,13 +506,16 @@ class Bubbles {
     this.lifespan = 255;
   }
   show() {
+    // Main body of the virus
     fill(this.colorR, this.lifespan, this.colorB);
     circle(this.x, this.y, this.r);
 
+    // Section for the spikes
     push();
     noStroke();
     translate(this.x, this.y);
-    for (var i = 0; i < 8; i++) {
+    for (let i = 0; i < 8; i++) {
+      // to draw the tentacles on the virus for 8 times
       rotate(PI / 4 + 0.015 * sin(frameCount * 0.1));
       noStroke();
       triangle(
@@ -520,13 +534,12 @@ class Bubbles {
       );
       circle(0, -this.r / 2 + 10 * cos(22.5), 8);
       pop();
-
       noStroke();
     }
     pop();
 
+    // Eyes and eyelids
     push();
-
     translate(this.x, this.y);
     fill(255, this.lifespan, 143);
     circle(-12, -5, 18);
@@ -540,6 +553,8 @@ class Bubbles {
     stroke(141, 238, 238);
     line(-14, -9, 0, -2);
     pop();
+
+    // The details of the virus's face
     push();
     translate(this.x, this.y);
     strokeWeight(4);
@@ -556,17 +571,19 @@ class Bubbles {
     arc(0, -30, 100, 100, (HALF_PI * 6.5) / 8, (HALF_PI * 9.5) / 8);
     arc(-13, 17, 10, 10, (PI * 2) / 3, (4 / 3) * PI);
     arc(13, 17, 10, 10, (-1 / 3) * PI, (1 / 3) * PI);
-    for (var x = -10; x < 10; x += 15) {
+    for (let x = -10; x < 10; x += 15) {
       triangle(x, 20, x + 2.5, 24, x + 5, 20);
     }
     pop();
+
+    // Circles for decorative elements
+    // The ball on the tip
     push();
     translate(this.x, this.y);
     fill(48, 128 + this.lifespan, 20);
     circle(-3, -22, 5);
     circle(-24, 6, 5);
     circle(23, 8, 5);
-
     pop();
   }
 
@@ -600,8 +617,8 @@ class Bubbles {
   enlarge(){
     if(this.isDead ==true){
       this.r=70
-      var xspeed2=this.xspeed*0.01
-      var yspeed2=this.yspeed*0.01
+      let xspeed2=this.xspeed*0.01
+      let yspeed2=this.yspeed*0.01
       this.x-=xspeed2
       this.y-=yspeed2 
     }
@@ -624,7 +641,7 @@ function draw() {
       bubbles.push(b);
     }
 
-  or (var i = 0; i < bubbles.length; i++) {
+  or (let i = 0; i < bubbles.length; i++) {
     bubbles[i].move();
     bubbles[i].bounce();
     bubbles[i].show();
@@ -640,8 +657,8 @@ So we can make some differences through time.
 By using```this.r=70```, we increased the diameter of the Virus
 
 The code listed here is to make the virus slow down:
-      var xspeed2=this.xspeed*0.01
-      var yspeed2=this.yspeed*0.01
+      let xspeed2=this.xspeed*0.01
+      let yspeed2=this.yspeed*0.01
       this.x-=xspeed2
       this.y-=yspeed2  
       
